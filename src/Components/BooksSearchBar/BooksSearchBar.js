@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Book from '../Book';
 import * as BooksAPI from '../../BooksAPI';
 
 
 class BooksSearchBar extends Component {
-  state = {
-    showSearchPage: false,
-    search: '',
-    books: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSearchPage: false,
+      search: '',
+      books: []
+    }
   }
 
   search = (value) => {
-      BooksAPI.search(value)
+    BooksAPI.search(value)
       .then((booksList) => {
-        this.setState({ books: booksList })
+        this.setState(() => ({ books: booksList || [] }))
       })
+      .catch((error) => console.log(error));
   }
 
   handleChange = (value) => {
@@ -24,6 +29,7 @@ class BooksSearchBar extends Component {
   }
 
   render() {
+    const { books } = this.state;
     return (
       <div className="search-books-bar">
         <Link to="/">
@@ -37,6 +43,15 @@ class BooksSearchBar extends Component {
             onChange={(e) => this.handleChange(e.target.value)}
           />
         </div>
+        {books.length && books.map((book) => (
+          <div className="bookshelf">
+            <div className="bookshelf-books">
+              <ol className="books-grid">
+                <Book book={book}/>
+              </ol>
+            </div>
+          </div>
+        ))}
       </div>
     )
   }

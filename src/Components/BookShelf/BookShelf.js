@@ -10,7 +10,7 @@ class BookShelf extends Component {
         <h2 className="bookshelf-title">{this.props.title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            <Book />
+            {/* <Book /> */}
           </ol>
         </div>
       </div>
