@@ -28,9 +28,18 @@ class BooksSearchBar extends Component {
     )
   }
 
+  moveTo = (book, shelf) => {
+    // this.setState((prevState) => ({
+    // }))
+    this.props.moveTo(book, shelf);
+    console.log(book, shelf);
+  }
+
+
   render() {
     const { books } = this.state;
     return (
+      <div>
       <div className="search-books-bar">
         <Link to="/">
           <button className="close-search">Close</button>
@@ -43,15 +52,21 @@ class BooksSearchBar extends Component {
             onChange={(e) => this.handleChange(e.target.value)}
           />
         </div>
-        {books.length && books.map((book) => (
+      </div>
+
+      {books.length && (
+        <div className="search-books-results">
           <div className="bookshelf">
             <div className="bookshelf-books">
               <ol className="books-grid">
-                <Book book={book}/>
+                {books.map((book) => (
+                  <Book key={book.id} book={book} moveTo={this.moveTo}/>
+                ))}
               </ol>
             </div>
           </div>
-        ))}
+        </div>
+      )}
       </div>
     )
   }

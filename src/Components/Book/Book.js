@@ -1,8 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
 const Book = (props) => {
   const { authors, title, imageLinks } = props.book;
+
+  const onMoveTo = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    props.moveTo(value, props.book);
+  }
+
   return (
     <li>
       <div className="book">
@@ -12,7 +19,7 @@ const Book = (props) => {
             style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.smallThumbnail})` }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select onClick={(e) => onMoveTo(e)}>
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
