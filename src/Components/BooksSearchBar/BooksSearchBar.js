@@ -29,10 +29,7 @@ class BooksSearchBar extends Component {
   }
 
   moveTo = (book, shelf) => {
-    // this.setState((prevState) => ({
-    // }))
     this.props.moveTo(book, shelf);
-    console.log(book, shelf);
   }
 
 

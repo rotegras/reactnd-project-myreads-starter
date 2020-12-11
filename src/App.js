@@ -61,8 +61,10 @@ class BooksApp extends Component {
                   this.state.shelves.map((shelf) => (
                     <BookShelf
                       key={shelf.id}
+                      id={shelf.id}
                       title={shelf.title}
                       books={shelf.books}
+                      moveTo={this.moveTo}
                     />
                   ))
                 }

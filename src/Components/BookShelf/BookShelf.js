@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import BooksApp from '../../App';
 import Book from '../Book';
 
 
 const BookShelf = (props) => {
-  const { title, books } = props;
+  const { books, id, title } = props;
 
   const moveTo = (book, shelf) => {
-    this.props.moveTo(book, shelf);
-    console.log(book, shelf);
+    props.moveTo(book, shelf);
   }
 
   return (
@@ -17,7 +15,13 @@ const BookShelf = (props) => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map((book) => (
-            <Book key={book.id} book={book} moveTo={moveTo}/>
+            <Book
+              key={book.id}
+              book={book}
+              moveTo={moveTo}
+              shelfId={id}
+              shelfTitle={title}
+            />
           ))}
           {/* <Book /> */}
         </ol>
