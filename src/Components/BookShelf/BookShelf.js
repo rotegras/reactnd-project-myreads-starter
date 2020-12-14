@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Book from '../Book';
 
 
 const BookShelf = (props) => {
-  const { books, id, title } = props;
+  const { books, shelfId, shelfTitle } = props;
 
   const moveTo = (book, shelf) => {
     props.moveTo(book, shelf);
@@ -11,7 +12,7 @@ const BookShelf = (props) => {
 
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{title}</h2>
+      <h2 className="bookshelf-title">{shelfTitle}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map((book) => (
@@ -19,8 +20,8 @@ const BookShelf = (props) => {
               key={book.id}
               book={book}
               moveTo={moveTo}
-              shelfId={id}
-              shelfTitle={title}
+              shelfId={shelfId}
+              shelfTitle={shelfTitle}
             />
           ))}
           {/* <Book /> */}
@@ -28,6 +29,12 @@ const BookShelf = (props) => {
       </div>
     </div>
   )
+}
+
+BookShelf.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  shelfTitle: PropTypes.string.isRequired,
+  shelfId: PropTypes.string.isRequired,
 }
 
 

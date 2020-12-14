@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as BooksAPI from '../../BooksAPI';
+import PropTypes from 'prop-types';
 
 
 class Book extends Component {
@@ -8,15 +10,18 @@ class Book extends Component {
 
   moveTo = (e) => {
     const { value } = e.target;
-    this.props.moveTo(value, this.props.book);
+    const { book } = this.props;
+    BooksAPI.update(book, value);
+    this.props.moveTo(book, value);
+    this.setState({ open: false });
   }
 
   handleClick = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    console.log(e.target.value);
     this.state.open ? (
       this.moveTo(e)
     ) : (this.setState({ open: true }));
-
   }
 
   render() {
@@ -45,6 +50,13 @@ class Book extends Component {
       </li>
     )
   }
+}
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  moveTo: PropTypes.func.isRequired,
+  shelfId: PropTypes.string.isRequired,
+  shelfTitle: PropTypes.string.isRequired,
 }
 
 export default Book;

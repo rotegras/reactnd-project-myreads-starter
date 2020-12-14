@@ -29,17 +29,26 @@ class BooksApp extends Component {
   }
 
   componentDidMount() {
+    this.getBooks();
+  }
+
+  getBooks = () => {
     BooksAPI.getAll()
       .then((booksList) => {
         this.setState({ books: booksList })
+        booksList.map((book) => {
+          this.moveBookToShelf(book)
+        })
       })
       .catch((error) => console.log(error));
   }
 
-  moveTo = (shelfName, book) => {
-    const shelf = { ...this.state.shelves.filter((shelf) => shelf.id === shelfName)}[0];
-    shelf.books.push(book);
-    this.setState((prevState) => ({...prevState, shelf}))
+  moveBookToShelf = (book, shelfName = book.shelf) => {
+      if (shelfName === 'none') return null;
+      const shelf = { ...this.state.shelves.filter((shelf) => shelf.id === shelfName)}[0];
+      shelf.books.push(book);
+      BooksAPI.update(book, shelfName);
+      this.setState((prevState) =>({ ...prevState, shelf }))
   }
 
   render() {
@@ -61,10 +70,10 @@ class BooksApp extends Component {
                   this.state.shelves.map((shelf) => (
                     <BookShelf
                       key={shelf.id}
-                      id={shelf.id}
-                      title={shelf.title}
+                      shelfId={shelf.id}
+                      shelfTitle={shelf.title}
                       books={shelf.books}
-                      moveTo={this.moveTo}
+                      moveTo={this.moveBookToShelf}
                     />
                   ))
                 }

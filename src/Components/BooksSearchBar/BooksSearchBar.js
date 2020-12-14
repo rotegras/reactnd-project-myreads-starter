@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Book from '../Book';
 import * as BooksAPI from '../../BooksAPI';
 
 
 class BooksSearchBar extends Component {
+  static PropTypes = {
+    shelfId: PropTypes.string.isRequired,
+    shelfTitle: PropTypes.string.isRequired,
+    books: PropTypes.array.isRequired,
+    moveTo: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +36,8 @@ class BooksSearchBar extends Component {
     )
   }
 
-  moveTo = (book, shelf) => {
-    this.props.moveTo(book, shelf);
+  moveBookToShelf = (book, shelf) => {
+    this.props.moveBookToShelf(book, shelf);
   }
 
 
@@ -57,7 +65,13 @@ class BooksSearchBar extends Component {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {books.map((book) => (
-                  <Book key={book.id} book={book} moveTo={this.moveTo}/>
+                  <Book
+                    key={book.id}
+                    book={book}
+                    moveBookToShelf={this.moveBookToShelf}
+                    shelfId="none"
+                    shelfName='Nome'
+                  />
                 ))}
               </ol>
             </div>
