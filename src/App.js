@@ -6,24 +6,25 @@ import SearchButton from './Components/SearchButton'
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 
+
 class BooksApp extends Component {
-  state = {
-    books: [],
-    shelves: [
+  constructor() {
+    super();
+    this.state = {
+      books: [],
+    }
+    this.shelves = [
       {
         id: 'wantToRead',
         title: 'Want to Read',
-        books: []
       },
       {
         id: 'currentlyReading',
         title: 'Currenty Reading',
-        books: []
       },
       {
         id: 'read',
         title: 'Read',
-        books: []
       }
     ]
   }
@@ -32,24 +33,32 @@ class BooksApp extends Component {
     this.getBooks();
   }
 
+  getRead = () => {
+    // this.setState({ ''}
+    // this.state.books.filter
+  }
+
   getBooks = () => {
     BooksAPI.getAll()
-      .then((booksList) => {
-        this.setState({ books: booksList })
-        booksList.map((book) => {
-          this.moveBookToShelf(book)
-        })
-      })
+      .then((booksList) => this.setState({ books: booksList }))
       .catch((error) => console.log(error));
   }
 
-  moveBookToShelf = (book, shelfName = book.shelf) => {
-      if (shelfName === 'none') return null;
-      const shelf = { ...this.state.shelves.filter((shelf) => shelf.id === shelfName)}[0];
-      shelf.books.push(book);
-      BooksAPI.update(book, shelfName);
-      this.setState((prevState) =>({ ...prevState, shelf }))
+  sortBooks = (books) => {
+    return this.shelves.map((shelf) => {
+      const booksInThisShelf = books.filter(book => book.shelf === shelf.id);
+      return (
+        <BookShelf
+          key={shelf.id}
+          shelfId={shelf.id}
+          shelfTitle={shelf.title}
+          books={booksInThisShelf}
+          // moveTo={this.moveBookToShelf}
+        />
+      )
+    })
   }
+
 
   render() {
     return (
@@ -66,16 +75,19 @@ class BooksApp extends Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                {
+                {/* {
                   this.state.shelves.map((shelf) => (
                     <BookShelf
                       key={shelf.id}
                       shelfId={shelf.id}
                       shelfTitle={shelf.title}
                       books={shelf.books}
-                      moveTo={this.moveBookToShelf}
+                      // moveTo={this.moveBookToShelf}
                     />
                   ))
+                } */}
+                {
+                  this.sortBooks(this.state.books)
                 }
               </div>
             <SearchButton />
