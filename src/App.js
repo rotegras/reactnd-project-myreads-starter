@@ -16,25 +16,21 @@ class BooksApp extends Component {
     this.shelves = [
       {
         id: 'wantToRead',
-        title: 'Want to Read',
+        name: 'Want to Read',
       },
       {
         id: 'currentlyReading',
-        title: 'Currenty Reading',
+        name: 'Currenty Reading',
       },
       {
         id: 'read',
-        title: 'Read',
+        name: 'Read',
       }
     ]
   }
 
   componentDidMount() {
     this.getBooks();
-  }
-
-  shoudComponentUpdate() {
-
   }
 
   getBooks = () => {
@@ -57,8 +53,7 @@ class BooksApp extends Component {
       return (
         <BookShelf
           key={shelf.id}
-          shelfId={shelf.id}
-          shelfTitle={shelf.title}
+          shelf={shelf}
           books={booksInThisShelf}
           moveBookToShelf={this.moveBookToShelf}
         />
@@ -72,7 +67,9 @@ class BooksApp extends Component {
       <div className="app">
           <Route path='/search'>
               <div className="search-books">
-                <SearchBar moveBookToShelf={this.moveBookToShelf}/>
+              <SearchBar
+                books={this.state.books}
+                moveBookToShelf={this.moveBookToShelf} />
               </div>
           </Route>
 

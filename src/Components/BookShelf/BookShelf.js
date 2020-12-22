@@ -4,7 +4,7 @@ import Book from '../Book';
 
 
 const BookShelf = (props) => {
-  const { books, shelfId, shelfTitle, moveBookToShelf } = props;
+  const { books, shelf, moveBookToShelf } = props;
 
   const onMoveTo = (book, shelf) => {
     moveBookToShelf(book, shelf);
@@ -13,7 +13,7 @@ const BookShelf = (props) => {
 
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{shelfTitle}</h2>
+      <h2 className="bookshelf-title">{shelf.name}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {
@@ -21,8 +21,6 @@ const BookShelf = (props) => {
             <Book
               key={book.id}
               book={book}
-              shelfId={shelfId}
-              shelfTitle={shelfTitle}
               moveBookToShelf={onMoveTo}
             />
             ))
@@ -36,8 +34,8 @@ const BookShelf = (props) => {
 
 BookShelf.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  shelfTitle: PropTypes.string.isRequired,
-  shelfId: PropTypes.string.isRequired,
+  shelf: PropTypes.object.isRequired,
+  moveBookToShelf: PropTypes.func.isRequired,
 }
 
 
