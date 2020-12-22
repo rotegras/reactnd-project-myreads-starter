@@ -4,26 +4,29 @@ import Book from '../Book';
 
 
 const BookShelf = (props) => {
-  const { books, shelfId, shelfTitle } = props;
+  const { books, shelfId, shelfTitle, moveBookToShelf } = props;
 
-  const moveTo = (book, shelf) => {
-    props.moveTo(book, shelf);
+  const onMoveTo = (book, shelf) => {
+    moveBookToShelf(book, shelf);
   }
+
 
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelfTitle}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {books.map((book) => (
+          {
+            books.map((book) => (
             <Book
               key={book.id}
               book={book}
-              moveTo={moveTo}
               shelfId={shelfId}
               shelfTitle={shelfTitle}
+              moveBookToShelf={onMoveTo}
             />
-          ))}
+            ))
+          }
           {/* <Book /> */}
         </ol>
       </div>

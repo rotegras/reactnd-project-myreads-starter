@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import BooksSearchBar from './Components/BooksSearchBar';
+import SearchBar from './Components/SearchBar';
 import BookShelf from './Components/BookShelf';
 import SearchButton from './Components/SearchButton'
 import * as BooksAPI from './BooksAPI';
@@ -33,15 +33,22 @@ class BooksApp extends Component {
     this.getBooks();
   }
 
-  getRead = () => {
-    // this.setState({ ''}
-    // this.state.books.filter
+  shoudComponentUpdate() {
+
   }
 
   getBooks = () => {
     BooksAPI.getAll()
       .then((booksList) => this.setState({ books: booksList }))
       .catch((error) => console.log(error));
+  }
+
+  moveBookToShelf = (book, shelf) => {
+    const restOfBooks = this.state.books.filter(b => b !== book);
+    const bookToUpdate = { ...book, 'shelf': shelf };
+    this.setState({
+      books: restOfBooks.concat(bookToUpdate)
+    }, () => BooksAPI.update(book, shelf))
   }
 
   sortBooks = (books) => {
@@ -53,7 +60,7 @@ class BooksApp extends Component {
           shelfId={shelf.id}
           shelfTitle={shelf.title}
           books={booksInThisShelf}
-          // moveTo={this.moveBookToShelf}
+          moveBookToShelf={this.moveBookToShelf}
         />
       )
     })
@@ -65,7 +72,7 @@ class BooksApp extends Component {
       <div className="app">
           <Route path='/search'>
               <div className="search-books">
-                <BooksSearchBar moveTo={this.moveTo}/>
+                <SearchBar moveBookToShelf={this.moveBookToShelf}/>
               </div>
           </Route>
 
