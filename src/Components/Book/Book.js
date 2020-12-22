@@ -13,13 +13,26 @@ const Book = (props) => {
     moveBookToShelf(book, value);
   }
 
+  const getOpacity = () => {
+    let opacity = shelf && shelf !== 'none' ? '.1' : '1';
+    if (props.searchPage === false) {
+      opacity = '1';
+    }
+    return opacity;
+  }
+
   return (
     <li>
       <div className="book">
         <div className="book-top">
           <div
             className="book-cover"
-            style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.smallThumbnail})` }}
+            style={{
+              width: 128,
+              height: 193,
+              backgroundImage: `url(${imageLinks.smallThumbnail})`,
+              opacity: `${getOpacity()}`
+            }}
           ></div>
           <div className="book-shelf-changer">
             <select
@@ -43,6 +56,7 @@ const Book = (props) => {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   moveBookToShelf: PropTypes.func.isRequired,
+  searchPage: PropTypes.bool.isRequired,
 }
 
 export default Book;
