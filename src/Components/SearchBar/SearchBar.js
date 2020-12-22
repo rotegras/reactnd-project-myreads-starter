@@ -5,14 +5,7 @@ import Book from '../Book';
 import * as BooksAPI from '../../BooksAPI';
 
 
-class BooksSearchBar extends Component {
-  static PropTypes = {
-    shelfId: PropTypes.string.isRequired,
-    shelfTitle: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired,
-    moveTo: PropTypes.func.isRequired,
-  }
-
+class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,4 +76,9 @@ class BooksSearchBar extends Component {
   }
 }
 
-export default BooksSearchBar;
+SearchBar.propTypes = {
+  moveBookToShelf: PropTypes.func.isRequired,
+}
+
+
+export default SearchBar;
