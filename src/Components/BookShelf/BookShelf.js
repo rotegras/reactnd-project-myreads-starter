@@ -22,7 +22,7 @@ const BookShelf = (props) => {
               key={book.id}
               book={book}
               moveBookToShelf={onMoveTo}
-              searchPage={false}
+              isSearchPage={false}
             />
             ))
           }

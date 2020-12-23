@@ -66,11 +66,10 @@ class BooksApp extends Component {
     return (
       <div className="app">
           <Route path='/search'>
-              <div className="search-books">
               <SearchBar
                 books={this.state.books}
-                moveBookToShelf={this.moveBookToShelf} />
-              </div>
+                moveBookToShelf={this.moveBookToShelf}
+              />
           </Route>
 
           <Route path='/' exact>
@@ -79,22 +78,11 @@ class BooksApp extends Component {
                 <h1>MyReads</h1>
               </div>
               <div className="list-books-content">
-                {/* {
-                  this.state.shelves.map((shelf) => (
-                    <BookShelf
-                      key={shelf.id}
-                      shelfId={shelf.id}
-                      shelfTitle={shelf.title}
-                      books={shelf.books}
-                      // moveTo={this.moveBookToShelf}
-                    />
-                  ))
-                } */}
                 {
                   this.sortBooks(this.state.books)
                 }
               </div>
-            <SearchButton />
+              <SearchButton />
             </div>
           </Route>
       </div>

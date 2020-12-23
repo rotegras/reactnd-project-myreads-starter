@@ -13,9 +13,8 @@ const Book = (props) => {
     moveBookToShelf(book, value);
   }
 
-  const getOpacity = () => {
-    let opacity = shelf && shelf !== 'none' ? '.1' : '1';
-    if (props.searchPage === false) {
+  const getOpacity = () => { let opacity = shelf && shelf !== 'none' ? '.1' : '1';
+    if (props.isSearchPage === false) {
       opacity = '1';
     }
     return opacity;
@@ -30,7 +29,7 @@ const Book = (props) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${imageLinks.smallThumbnail})`,
+              backgroundImage: `url(${imageLinks.thumbnail || ''})`,
               opacity: `${getOpacity()}`
             }}
           ></div>
@@ -54,9 +53,25 @@ const Book = (props) => {
 }
 
 Book.propTypes = {
-  book: PropTypes.object.isRequired,
+  book: PropTypes.shape({
+    authors: PropTypes.array,
+    title: PropTypes.string.isRequired,
+    imageLinks: PropTypes.shape({
+      smallThumbnail: PropTypes.string,
+    }),
+    shelf: PropTypes.string,
+  }).isRequired,
   moveBookToShelf: PropTypes.func.isRequired,
-  searchPage: PropTypes.bool.isRequired,
+  isSearchPage: PropTypes.bool.isRequired,
 }
 
+Book.defaultProps = {
+  book: {
+    authors: ['default'],
+    imageLinks: {
+      smallThumbnail: '',
+    },
+    shelf: 'none'
+  }
+}
 export default Book;

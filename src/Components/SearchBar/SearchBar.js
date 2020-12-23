@@ -11,16 +11,8 @@ class SearchBar extends Component {
     this.state = {
       search: '',
       searchResult: [],
-      render: true, // temp
       hasError: false
     }
-  }
-
-  static getDerivedStateFromError(error) {
-    return {
-      hasError: true,
-      searchResult: []
-    };
   }
 
   componentDidUpdate(prevProps) {
@@ -44,8 +36,8 @@ class SearchBar extends Component {
       .catch((err) => console.log(err));
   }
 
-
-  handleChange = (value) => {
+  handleChange = (e) => {
+    const { value } = e.target;
     this.setState(() => ({ search: value || ''}),
     this.search(value)
     )
@@ -59,7 +51,7 @@ class SearchBar extends Component {
     const { searchResult } = this.state;
 
     return (
-      <div>
+      <div className="search-books">
         <div className="search-books-bar">
           <Link to="/">
             <button className="close-search">Close</button>
@@ -69,7 +61,8 @@ class SearchBar extends Component {
             type="text"
             value={this.state.search}
             placeholder="Search by title or author"
-            onChange={(e) => this.handleChange(e.target.value)}
+            onChange={(e) => this.handleChange(e)}
+            autoFocus
           />
         </div>
       </div>
@@ -80,14 +73,13 @@ class SearchBar extends Component {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {
-                  this.state.render &&
                   searchResult && searchResult.length > 0 &&
                   searchResult.map((book) => (
                     <Book
                       key={book.id}
                       book={book}
                       moveBookToShelf={this.moveBookToShelf}
-                      searchPage={true}
+                      isSearchPage={true}
                     />
                   ))
                 }
@@ -101,8 +93,8 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-moveBookToShelf: PropTypes.func.isRequired,
-books: PropTypes.array.isRequired,
+  moveBookToShelf: PropTypes.func.isRequired,
+  books: PropTypes.array.isRequired,
 }
 
 
