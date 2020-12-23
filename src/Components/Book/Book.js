@@ -3,8 +3,17 @@ import * as BooksAPI from '../../BooksAPI';
 import PropTypes from 'prop-types';
 
 
-const Book = (props) => {
-  const { book, moveBookToShelf } = props;
+const defaultBook = {
+    authors: ['Javi Ortega'],
+    title: 'Learning React',
+    imageLinks: {
+        smallThumbnail: 'somtext',
+      },
+    shelf: 'none',
+}
+
+
+const Book = ({ book = defaultBook, moveBookToShelf, isSearchPage }) => {
   const { authors, title, imageLinks, shelf } = book;
 
   const handleChange = (e) => {
@@ -13,12 +22,19 @@ const Book = (props) => {
     moveBookToShelf(book, value);
   }
 
+  console.table(book);
+
   const getOpacity = () => { let opacity = shelf && shelf !== 'none' ? '.1' : '1';
-    if (props.isSearchPage === false) {
+    if (isSearchPage === false) {
       opacity = '1';
     }
     return opacity;
   }
+
+  const backgroundImage =
+    imageLinks && imageLinks.smallThumbnail ?
+      book.imageLinks.smallThumbnail :
+      '';
 
   return (
     <li>
@@ -29,7 +45,7 @@ const Book = (props) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${imageLinks.thumbnail || ''})`,
+              backgroundImage: `url(${backgroundImage})`,
               opacity: `${getOpacity()}`
             }}
           ></div>
@@ -56,22 +72,11 @@ Book.propTypes = {
   book: PropTypes.shape({
     authors: PropTypes.array,
     title: PropTypes.string.isRequired,
-    imageLinks: PropTypes.shape({
-      smallThumbnail: PropTypes.string,
-    }),
+    imageLinks: PropTypes.object.isRequired,
     shelf: PropTypes.string,
   }).isRequired,
   moveBookToShelf: PropTypes.func.isRequired,
   isSearchPage: PropTypes.bool.isRequired,
 }
 
-Book.defaultProps = {
-  book: {
-    authors: ['default'],
-    imageLinks: {
-      smallThumbnail: '',
-    },
-    shelf: 'none'
-  }
-}
 export default Book;

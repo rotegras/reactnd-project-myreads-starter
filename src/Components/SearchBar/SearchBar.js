@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Book from '../Book';
+import SearchResult from '../SearchResult';
 import * as BooksAPI from '../../BooksAPI';
 
 
@@ -11,7 +11,6 @@ class SearchBar extends Component {
     this.state = {
       search: '',
       searchResult: [],
-      hasError: false
     }
   }
 
@@ -19,6 +18,11 @@ class SearchBar extends Component {
     if (this.props.books !== prevProps.books) {
       this.search(this.state.search);
     }
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
   }
 
   search = (value) => {
@@ -31,14 +35,16 @@ class SearchBar extends Component {
             return item;
           });
           this.setState({ searchResult: result });
+          return;
         }
+        this.setState({ searchResult: [] });
       })
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   }
 
   handleChange = (e) => {
     const { value } = e.target;
-    this.setState(() => ({ search: value || ''}),
+    this.setState({ search: value },
     this.search(value)
     )
   }
@@ -67,26 +73,10 @@ class SearchBar extends Component {
         </div>
       </div>
 
-        {this.state.hasError &&  null }
-        <div className="search-books-results">
-          <div className="bookshelf">
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {
-                  searchResult && searchResult.length > 0 &&
-                  searchResult.map((book) => (
-                    <Book
-                      key={book.id}
-                      book={book}
-                      moveBookToShelf={this.moveBookToShelf}
-                      isSearchPage={true}
-                    />
-                  ))
-                }
-              </ol>
-            </div>
-          </div>
-        </div>
+        <SearchResult
+          books={searchResult}
+          moveBookToShelf={this.moveBookToShelf}
+          />
       </div>
     )
   }

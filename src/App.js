@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import SearchBar from './Components/SearchBar';
+import ErrorBoundary from './Components/ErrorBoundary';
 import BookShelf from './Components/BookShelf';
 import SearchButton from './Components/SearchButton'
 import * as BooksAPI from './BooksAPI';
@@ -66,10 +67,12 @@ class BooksApp extends Component {
     return (
       <div className="app">
           <Route path='/search'>
+            <ErrorBoundary>
               <SearchBar
                 books={this.state.books}
                 moveBookToShelf={this.moveBookToShelf}
               />
+            </ErrorBoundary>
           </Route>
 
           <Route path='/' exact>
