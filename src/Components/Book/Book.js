@@ -1,6 +1,6 @@
 import React from 'react';
-import * as BooksAPI from '../../BooksAPI';
 import PropTypes from 'prop-types';
+import * as BooksAPI from '../../BooksAPI';
 
 
 const Book = ({ book, moveBookToShelf, isSearchPage }) => {
