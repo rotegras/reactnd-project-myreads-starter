@@ -31,7 +31,7 @@ class SearchBar extends Component {
         if(booksList && booksList.length > 0) {
           const result = booksList.map((item) => {
             const bk = this.props.books.filter((b) => b.id === item.id)[0];
-            if (bk) { return bk };
+            if (bk) return bk;
             return item;
           });
           this.setState({ searchResult: result });
@@ -39,7 +39,7 @@ class SearchBar extends Component {
         }
         this.setState({ searchResult: [] });
       })
-      // .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   handleChange = (e) => {
