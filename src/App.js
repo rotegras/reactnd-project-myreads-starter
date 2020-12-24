@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import ShelvesView from './Views/ShelvesView';
-import SearchBar from './Components/SearchBar';
-import ErrorBoundary from './Components/ErrorBoundary';
+import SearchView from './Views/SearchView';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 
@@ -31,23 +30,22 @@ class BooksApp extends Component {
   }
 
   render() {
+    const { books } = this.state;
+
     return (
       <div className="app">
-          <Route path='/search'>
-            <ErrorBoundary>
-              <SearchBar
-                books={this.state.books}
-                moveBookToShelf={this.moveBookToShelf}
-              />
-            </ErrorBoundary>
-          </Route>
-
-          <Route path='/' exact>
-            <ShelvesView
-              books={this.state.books}
-              moveBookToShelf={this.moveBookToShelf}
-            />
-          </Route>
+        <Route path='/' exact>
+          <ShelvesView
+            books={books}
+            moveBookToShelf={this.moveBookToShelf}
+          />
+        </Route>
+        <Route path='/search'>
+          <SearchView
+            books={books}
+            moveBookToShelf={this.moveBookToShelf}
+          />
+        </Route>
       </div>
     )
   }

@@ -22,8 +22,6 @@ const Book = ({ book = defaultBook, moveBookToShelf, isSearchPage }) => {
     moveBookToShelf(book, value);
   }
 
-  console.table(book);
-
   const getOpacity = () => { let opacity = shelf && shelf !== 'none' ? '.1' : '1';
     if (isSearchPage === false) {
       opacity = '1';

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import SearchResult from '../SearchResult';
-import * as BooksAPI from '../../BooksAPI';
 
 
 class SearchBar extends Component {
@@ -10,42 +8,17 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       search: '',
-      searchResult: [],
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.books !== prevProps.books) {
-      this.search(this.state.search);
-    }
-  }
-
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
-
-  search = (value) => {
-    BooksAPI.search(value)
-      .then((booksList) => {
-        if(booksList && booksList.length > 0) {
-          const result = booksList.map((item) => {
-            const bk = this.props.books.filter((b) => b.id === item.id)[0];
-            if (bk) return bk;
-            return item;
-          });
-          this.setState({ searchResult: result });
-          return;
-        }
-        this.setState({ searchResult: [] });
-      })
-      .catch((err) => console.log(err));
+  updateSearch = (value) => {
+    this.props.updateSearch(value);
   }
 
   handleChange = (e) => {
     const { value } = e.target;
     this.setState({ search: value },
-    this.search(value)
+      this.updateSearch(value)
     )
   }
 
@@ -54,14 +27,11 @@ class SearchBar extends Component {
   }
 
   render() {
-    const { searchResult } = this.state;
-
     return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link to="/">
-            <button className="close-search">Close</button>
-          </Link>
+      <div className="search-books-bar">
+        <Link to="/">
+          <button className="close-search">Close</button>
+        </Link>
         <div className="search-books-input-wrapper">
           <input
             type="text"
@@ -72,19 +42,12 @@ class SearchBar extends Component {
           />
         </div>
       </div>
-
-        <SearchResult
-          books={searchResult}
-          moveBookToShelf={this.moveBookToShelf}
-          />
-      </div>
     )
   }
 }
 
 SearchBar.propTypes = {
   moveBookToShelf: PropTypes.func.isRequired,
-  books: PropTypes.array.isRequired,
 }
 
 

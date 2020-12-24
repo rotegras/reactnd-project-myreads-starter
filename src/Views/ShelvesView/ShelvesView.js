@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SearchButton from '../../Components/SearchButton'
 import BookShelf from '../../Components/BookShelf';
 import SHELVES from '../../constants';
@@ -39,5 +40,9 @@ const ShelvesView = ({ books, moveBookToShelf }) => {
   )
 }
 
+ShelvesView.propTypes = {
+  books: PropTypes.array.isRequired,
+  moveBookToShelf: PropTypes.func.isRequired,
+}
 
 export default ShelvesView;

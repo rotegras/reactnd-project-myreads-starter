@@ -3,14 +3,11 @@ import ErrorBoundary from '../ErrorBoundary';
 import Book from '../Book';
 
 
-const SearchResult = (props) => {
-  const { moveBookToShelf, books } = props;
+const SearchResult = ({ books, moveBookToShelf }) => {
 
   const moveTo = (book, shelf) => {
     moveBookToShelf(book, shelf);
   }
-
-  // console.table('imageLinks: ', books.map(book => Object.keys(book.imageLinks).length || 'false'));
 
   return (
     <div className="search-books-results">
