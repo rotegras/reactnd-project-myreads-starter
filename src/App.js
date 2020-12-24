@@ -8,26 +8,24 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 
+const SHELVES = [
+  {
+    id: 'wantToRead',
+    name: 'Want to Read',
+  },
+  {
+    id: 'currentlyReading',
+    name: 'Currenty Reading',
+  },
+  {
+    id: 'read',
+    name: 'Read',
+  }
+]
+
 class BooksApp extends Component {
-  constructor() {
-    super();
-    this.state = {
-      books: [],
-    }
-    this.shelves = [
-      {
-        id: 'wantToRead',
-        name: 'Want to Read',
-      },
-      {
-        id: 'currentlyReading',
-        name: 'Currenty Reading',
-      },
-      {
-        id: 'read',
-        name: 'Read',
-      }
-    ]
+  state = {
+    books: [],
   }
 
   componentDidMount() {
@@ -49,7 +47,7 @@ class BooksApp extends Component {
   }
 
   sortBooks = (books) => {
-    return this.shelves.map((shelf) => {
+    return SHELVES.map((shelf) => {
       const booksInThisShelf = books.filter(book => book.shelf === shelf.id);
       return (
         <BookShelf
@@ -61,7 +59,6 @@ class BooksApp extends Component {
       )
     })
   }
-
 
   render() {
     return (
@@ -92,5 +89,6 @@ class BooksApp extends Component {
     )
   }
 }
+
 
 export default BooksApp;
