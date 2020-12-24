@@ -1,3 +1,5 @@
+// error boundary component from
+// https://codepen.io/gaearon/pen/wqvxGa?editors=0010
 import React, { Component } from 'react';
 
 
