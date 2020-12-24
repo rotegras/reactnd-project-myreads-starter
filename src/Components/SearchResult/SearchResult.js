@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ErrorBoundary from '../ErrorBoundary';
 import Book from '../Book';
 
 
-const SearchResult = ({ books, moveBookToShelf }) => {
+const SearchResult = ({ moveBookToShelf, books }) => {
 
   const moveTo = (book, shelf) => {
     moveBookToShelf(book, shelf);
@@ -34,6 +35,10 @@ const SearchResult = ({ books, moveBookToShelf }) => {
   )
 }
 
+SearchResult.propTypes = {
+  books: PropTypes.array.isRequired,
+  moveBookToShelf: PropTypes.func.isRequired,
+}
+
 
 export default SearchResult;
-

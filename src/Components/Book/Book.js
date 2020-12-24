@@ -3,17 +3,7 @@ import * as BooksAPI from '../../BooksAPI';
 import PropTypes from 'prop-types';
 
 
-const defaultBook = {
-    authors: ['Javi Ortega'],
-    title: 'Learning React',
-    imageLinks: {
-        smallThumbnail: 'somtext',
-      },
-    shelf: 'none',
-}
-
-
-const Book = ({ book = defaultBook, moveBookToShelf, isSearchPage }) => {
+const Book = ({ book, moveBookToShelf, isSearchPage }) => {
   const { authors, title, imageLinks, shelf } = book;
 
   const handleChange = (e) => {
@@ -76,5 +66,16 @@ Book.propTypes = {
   moveBookToShelf: PropTypes.func.isRequired,
   isSearchPage: PropTypes.bool.isRequired,
 }
+
+Book.defaultProps = {
+  book: {
+    shelf: 'none',
+    imageLinks: {
+      smallThumbnail: '',
+    },
+    author: [''],
+  }
+}
+
 
 export default Book;
