@@ -60,7 +60,7 @@ Book.propTypes = {
   book: PropTypes.shape({
     authors: PropTypes.array,
     title: PropTypes.string.isRequired,
-    imageLinks: PropTypes.object.isRequired,
+    imageLinks: PropTypes.object,
     shelf: PropTypes.string,
   }).isRequired,
   moveBookToShelf: PropTypes.func.isRequired,
